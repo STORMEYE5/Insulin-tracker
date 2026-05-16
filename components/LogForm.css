@@ -1,0 +1,31 @@
+.log-form-container {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.log-form-container h2 {
+  text-align: center;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.6em;
+}
+
+.log-form-container .message {
+  margin-top: 20px;
+  font-size: 0.95em;
+  color: #4CAF50; /* Default for success */
+}
+
+.log-form-container .message.error {
+  color: #f44336;
+}
+
+.save-button {
+  margin-top: 20px;
+  padding: 15px; /* Larger touch area */
+  font-size: 1.1em;
+}

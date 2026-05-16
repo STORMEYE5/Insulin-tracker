@@ -1,0 +1,80 @@
+.log-history-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.log-history-container h2 {
+  text-align: center;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.6em;
+}
+
+.log-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.log-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.log-date {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.log-glucose, .log-insulin {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #333;
+}
+
+.log-insulin {
+  color: #007bff; /* A different color for insulin to distinguish */
+}
+
+.delete-button {
+  background-color: #f44336;
+  width: 40px; /* Fixed size for delete button */
+  height: 40px;
+  min-width: unset; /* Override full width from App.css */
+  padding: 0;
+  margin-left: 15px;
+  border-radius: 50%; /* Make it round */
+  font-size: 1.2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+}
+
+.error-message {
+  color: #f44336;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}

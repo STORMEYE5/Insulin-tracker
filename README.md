@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# Diabetes Log PWA
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A mobile-only Progressive Web App (PWA) designed for individuals with diabetes to easily log their blood glucose levels and insulin doses. This application prioritizes a clean, accessible, and touch-friendly user interface, optimized exclusively for mobile devices.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+*   **Mobile-First Responsive Design:** Optimized for screens with a maximum width of 480px, ensuring a seamless experience on smartphones.
+*   **Intuitive UI:** Large, touch-friendly input fields for easy data entry.
+*   **Blood Glucose Logging:** Record blood glucose levels in mmol/L.
+*   **Insulin Dose Logging:** Record insulin doses in units.
+*   **Data Validation:** Ensures blood glucose is a positive number and insulin dose is zero or greater.
+*   **Entry History:** Displays a chronological list of all saved entries, including date, time, blood glucose, and insulin dose.
+*   **Delete Entries:** Ability to remove individual log entries from the history.
+*   **Progressive Web App (PWA):** Installable on mobile devices for quick access, with potential for offline capabilities (can be enabled by modifying `serviceWorkerRegistration.js`).
 
-### `npm start`
+## Technology Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+*   **Frontend:** React (for building the user interface).
+*   **Backend/Database:** Supabase (for database storage, authentication, and real-time capabilities).
+*   **Version Control & Deployment:** GitHub & GitHub Pages.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Supabase Setup Instructions
 
-### `npm test`
+Supabase will serve as the backend for storing your diabetes logs.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. Create a Supabase Project
 
-### `npm run build`
+1.  Go to [Supabase](https://app.supabase.io/) and sign in or create an account.
+2.  Click "New project".
+3.  Choose an organization, give your project a name (e.g., `diabetes-logger`), set a strong database password, and choose your preferred region.
+4.  Click "Create new project".
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 2. Create the `diabetes_logs` Table
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Once your project is ready:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1.  Navigate to the "Table editor" in the Supabase dashboard (usually on the left sidebar).
+2.  Click "New table".
+3.  Use the following SQL schema to create your table. You can paste this directly into the SQL Editor (SQL icon on the left sidebar) and run it, or fill out the form manually.
 
-### `npm run eject`
+    ```sql
+    CREATE TABLE diabetes_logs (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+      blood_glucose_mmol NUMERIC NOT NULL,
+      insulin_units NUMERIC NOT NULL
+    );
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    ALTER TABLE diabetes_logs ENABLE ROW LEVEL SECURITY;
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    CREATE POLICY "Enable read access for all users" ON diabetes_logs FOR
+    SELECT
+      USING (TRUE);
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    CREATE POLICY "Enable insert for authenticated users only" ON diabetes_logs FOR
+    INSERT
+      WITH CHECK (auth.role() = 'authenticated');
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    CREATE POLICY "Enable delete for authenticated users only" ON diabetes_logs FOR
+    DELETE
+      USING (auth.uid() IS NOT NULL); -- Assuming user will own their logs
+    ```
+4.  After creating the table, ensure Row Level Security (RLS) policies are in place as shown in the SQL above. These policies allow all users to read logs and authenticated users to insert and delete their own logs. For a simple app like this, a basic `auth.uid() IS NOT NULL` check for deletion is sufficient, but in a production app, you might want to link logs to specific user IDs for stronger ownership.
 
-## Learn More
+### 3. Get Supabase Credentials
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1.  In your Supabase project dashboard, go to "Project Settings" (gear icon) -> "API".
+2.  You will find your `Project URL` and `anon public` key. Copy these values.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Local Development Steps
 
-### Code Splitting
+To run this application on your local machine:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 1. Clone the Repository (or create project structure)
 
-### Analyzing the Bundle Size
+If you haven't already, create a project folder named `pwa-diabetes-logger` and place all the provided files inside it, maintaining the `public`, `src/components` and `src` directory structure.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 2. Install Dependencies
 
-### Making a Progressive Web App
+Navigate into the `pwa-diabetes-logger` directory in your terminal and install the necessary Node.js packages:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+cd pwa-diabetes-logger
+npm install
+# or
+yarn install
