@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/insulin-tracker/static/css/main.ebf765c5.css",
+    "main.js": "/insulin-tracker/static/js/main.7c9ca6ad.js",
+    "static/js/453.accd06ba.chunk.js": "/insulin-tracker/static/js/453.accd06ba.chunk.js",
+    "index.html": "/insulin-tracker/index.html",
+    "main.ebf765c5.css.map": "/insulin-tracker/static/css/main.ebf765c5.css.map",
+    "main.7c9ca6ad.js.map": "/insulin-tracker/static/js/main.7c9ca6ad.js.map",
+    "453.accd06ba.chunk.js.map": "/insulin-tracker/static/js/453.accd06ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ebf765c5.css",
+    "static/js/main.7c9ca6ad.js"
+  ]
+}
