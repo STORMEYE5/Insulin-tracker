@@ -43,6 +43,7 @@ function LogForm({ onSave }) {
       console.error('Error saving entry:', error);
     }
   };
+  
 
   return (
     <div className="log-form-container">
