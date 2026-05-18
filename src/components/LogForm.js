@@ -24,7 +24,7 @@ function LogForm({ onSave }) {
     }
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('diabetes_logs')
         .insert([
           { blood_glucose_mmol: bg, insulin_units: insulin },
@@ -43,7 +43,7 @@ function LogForm({ onSave }) {
       console.error('Error saving entry:', error);
     }
   };
-  
+
 
   return (
     <div className="log-form-container">
